@@ -6,11 +6,8 @@ Personal portfolio website built with plain HTML, CSS, and JavaScript (no framew
 ```
 portfolio/
 ├── index.html      # All page content/sections
-├── css/
-│   └── style.css   # All styling
-├── js/
-│   └── script.js   # Mobile nav toggle, footer year
-├── assets/         # Images/icons go here
+├── style.css       # All styling
+├── script.js       # Mobile nav toggle, footer year
 └── README.md
 ```
 

@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tejas Choudhar | Portfolio</title>
-<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -27,6 +30,7 @@
     <!-- HERO -->
     <section id="home" class="hero">
       <div class="hero-content">
+        <span class="hero-badge">Open to opportunities</span>
         <p class="hero-eyebrow">Hello, I'm</p>
         <h1>Tejas Satish Choudhar</h1>
         <p class="hero-tagline">AI/ML undergraduate building CNN, NLP, and full-stack applications — from data pipelines to deployed user interfaces.</p>
@@ -39,6 +43,7 @@
 
     <!-- ABOUT -->
     <section id="about" class="section">
+      <p class="eyebrow">Who I Am</p>
       <h2>About</h2>
       <div class="about-grid">
         <div class="about-text">
@@ -61,29 +66,39 @@
 
     <!-- SKILLS -->
     <section id="skills" class="section alt-bg">
+      <p class="eyebrow">What I Work With</p>
       <h2>Skills</h2>
       <div class="skills-grid">
         <div class="skill-card">
           <h3>Languages</h3>
-          <p>Python (Proficient), C++, Java, Kotlin, JavaScript, SQL</p>
+          <div class="tag-list">
+            <span class="tag">Python</span><span class="tag">C++</span><span class="tag">Java</span><span class="tag">Kotlin</span><span class="tag">JavaScript</span><span class="tag">SQL</span>
+          </div>
         </div>
         <div class="skill-card">
           <h3>Data Science &amp; Web</h3>
-          <p>Machine Learning, NLP, HTML5, CSS3, JavaScript, MySQL</p>
+          <div class="tag-list">
+            <span class="tag">Machine Learning</span><span class="tag">NLP</span><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">MySQL</span>
+          </div>
         </div>
         <div class="skill-card">
           <h3>Tools</h3>
-          <p>Google Colab, VS Code, Git/GitHub, Firebase</p>
+          <div class="tag-list">
+            <span class="tag">Google Colab</span><span class="tag">VS Code</span><span class="tag">Git/GitHub</span><span class="tag">Firebase</span>
+          </div>
         </div>
         <div class="skill-card">
           <h3>Core Concepts</h3>
-          <p>OOPs, Data Structures, DBMS, Computer Networks, Theory of Computation, Software Engineering, Embedded AI, Information Security</p>
+          <div class="tag-list">
+            <span class="tag">OOPs</span><span class="tag">Data Structures</span><span class="tag">DBMS</span><span class="tag">Computer Networks</span><span class="tag">Theory of Computation</span><span class="tag">Software Engineering</span><span class="tag">Embedded AI</span><span class="tag">Information Security</span>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- PROJECTS -->
     <section id="projects" class="section">
+      <p class="eyebrow">Selected Work</p>
       <h2>Projects</h2>
       <div class="projects-grid">
 
@@ -133,6 +148,7 @@
 
     <!-- CONTACT -->
     <section id="contact" class="section alt-bg">
+      <p class="eyebrow">Let's Connect</p>
       <h2>Get in Touch</h2>
       <p class="contact-intro">Feel free to reach out for collaborations, opportunities, or just a chat about AI/ML.</p>
       <div class="contact-grid">
@@ -172,6 +188,6 @@
     <p>&copy; <span id="year"></span> Tejas Satish Choudhar. All rights reserved.</p>
   </footer>
 
-  <script src="js/script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
