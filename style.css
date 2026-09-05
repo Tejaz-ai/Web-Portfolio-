@@ -218,6 +218,12 @@ ul {
   background: var(--bg-alt);
 }
 
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 /* SECTIONS */
 .section {
   max-width: var(--max-width);
