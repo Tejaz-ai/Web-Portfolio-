@@ -25,3 +25,4 @@ Just open `index.html` in a browser — no build tools required.
 - Replace the `#` placeholder links in the Contact section (LinkedIn, GitHub, LeetCode, HackerRank, Kaggle) with real URLs.
 - Add a profile photo to `assets/` and reference it in the hero section if desired.
 - Colors and fonts are controlled via CSS variables at the top of `css/style.css`.
+- the style was updated
