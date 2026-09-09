@@ -9,6 +9,7 @@ portfolio/
 ├── style.css       # All styling
 ├── script.js       # Mobile nav toggle, footer year
 └── README.md
+resume.txt
 ```
 
 ## Running locally
