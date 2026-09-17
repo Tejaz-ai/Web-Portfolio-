@@ -7,7 +7,6 @@ if (menuToggle && navLinks) {
     navLinks.classList.toggle('open');
   });
 
-  // Close menu after clicking a link (mobile)
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
@@ -19,23 +18,6 @@ if (menuToggle && navLinks) {
 const yearEl = document.getElementById('year');
 if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
-}
-
-// Scroll reveal animations
-const revealEls = document.querySelectorAll('.reveal');
-if (revealEls.length && 'IntersectionObserver' in window) {
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  revealEls.forEach(el => revealObserver.observe(el));
-} else {
-  revealEls.forEach(el => el.classList.add('is-visible'));
 }
 
 // Active nav link highlighting
