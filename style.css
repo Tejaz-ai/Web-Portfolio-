@@ -7,6 +7,9 @@
   --accent-soft: #E4EBDF;
   --line: #DCD6C6;
   --card-bg: #ffffff;
+  --nav-bg: rgba(250, 247, 240, 0.88);
+  --accent-hover: #285f42;
+  --dot: rgba(47, 111, 78, 0.07);
   --max-width: 1080px;
   --radius: 14px;
 
@@ -15,13 +18,31 @@
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 }
 
+
+/* DARK THEME */
+:root[data-theme="dark"] {
+  --paper: #151912;
+  --paper-alt: #1B2018;
+  --ink: #ECE8DC;
+  --ink-muted: #A8A395;
+  --accent: #6FB58B;
+  --accent-soft: #243327;
+  --line: #2E352B;
+  --card-bg: #1F2519;
+  --nav-bg: rgba(21, 25, 18, 0.88);
+  --accent-hover: #86C7A0;
+  --dot: rgba(111, 181, 139, 0.08);
+}
+
+::selection { background: var(--accent); color: var(--paper); }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: var(--font-body);
   color: var(--ink);
   background-color: var(--paper);
-  background-image: radial-gradient(rgba(47, 111, 78, 0.07) 1px, transparent 1px);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
   background-size: 22px 22px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -55,7 +76,7 @@ ul { list-style: none; }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(250, 247, 240, 0.88);
+  background: var(--nav-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
@@ -174,7 +195,7 @@ ul { list-style: none; }
 
 .btn-solid:hover {
   transform: translateY(-2px);
-  background: #285f42;
+  background: var(--accent-hover);
   box-shadow: 0 10px 22px rgba(47, 111, 78, 0.25);
 }
 
@@ -657,3 +678,28 @@ section[id] { scroll-margin-top: 76px; }
 
 /* ACCESSIBILITY */
 a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+
+/* THEME TOGGLE */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  margin-left: 1.25rem;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); transform: rotate(15deg); }
+.theme-toggle svg { width: 17px; height: 17px; }
+.theme-toggle .icon-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+.nav-actions { display: flex; align-items: center; }
