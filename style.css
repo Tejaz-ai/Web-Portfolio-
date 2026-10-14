@@ -703,3 +703,25 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 .nav-actions { display: flex; align-items: center; }
+
+/* 404 PAGE */
+.notfound {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.notfound-code {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+.notfound h1 { font-size: clamp(2rem, 5vw, 2.8rem); }
+.notfound p:not(.notfound-code) { color: var(--ink-muted); margin-bottom: 0.75rem; }
