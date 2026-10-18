@@ -725,3 +725,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 
 .notfound h1 { font-size: clamp(2rem, 5vw, 2.8rem); }
 .notfound p:not(.notfound-code) { color: var(--ink-muted); margin-bottom: 0.75rem; }
+
+/* CERTIFICATE LINKS */
+.cert-link {
+  display: inline-block;
+  margin-top: 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.cert-link:hover { border-bottom-color: var(--accent); }
