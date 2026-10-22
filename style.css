@@ -738,3 +738,35 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 }
 
 .cert-link:hover { border-bottom-color: var(--accent); }
+
+/* SKIP LINK */
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 1rem;
+  z-index: 300;
+  background: var(--accent);
+  color: var(--paper);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus { top: 0.75rem; }
+
+/* COPY EMAIL BUTTON */
+button.contact-chip {
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* PRINT */
+@media print {
+  .navbar, .scroll-progress, .scroll-cue, .back-to-top, .theme-toggle, .skip-link, .contact-strip { display: none !important; }
+  body { background: #fff; color: #000; }
+  .section, .section-compact { padding: 1.5rem 0; }
+  .project-card, .cert-card, .skill-card { break-inside: avoid; box-shadow: none; }
+}
