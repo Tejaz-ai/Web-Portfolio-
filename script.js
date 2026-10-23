@@ -33,7 +33,9 @@ if (sections.length && navAnchors.length && 'IntersectionObserver' in window) {
       if (entry.isIntersecting) {
         const id = entry.target.getAttribute('id');
         navAnchors.forEach(a => {
-          a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
+          const on = a.getAttribute('href') === `#${id}`;
+          a.classList.toggle('active', on);
+          if (on) { a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
         });
       }
     });
@@ -122,4 +124,22 @@ if (navbar) {
   }, { threshold: 0.6 });
 
   nums.forEach((el) => io.observe(el));
+})();
+
+
+// Copy email to clipboard
+(function () {
+  const btn = document.getElementById('copyEmail');
+  const label = document.getElementById('copyLabel');
+  if (!btn || !label) return;
+  btn.addEventListener('click', async () => {
+    const email = btn.dataset.email;
+    try {
+      await navigator.clipboard.writeText(email);
+      label.textContent = 'Copied!';
+    } catch (e) {
+      label.textContent = email;
+    }
+    setTimeout(() => { label.textContent = 'Copy email'; }, 2000);
+  });
 })();
