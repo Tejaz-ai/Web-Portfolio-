@@ -280,8 +280,13 @@ ul { list-style: none; }
   border-radius: 2px;
 }
 
-.alt-bg { background: var(--paper-alt); max-width: 100%; }
-.alt-bg > * { max-width: var(--max-width); margin-left: auto; margin-right: auto; }
+.alt-bg {
+  background: var(--paper-alt);
+  max-width: none;
+  margin: 0;
+  padding-left: max(1.5rem, calc((100% - var(--max-width)) / 2 + 1.5rem));
+  padding-right: max(1.5rem, calc((100% - var(--max-width)) / 2 + 1.5rem));
+}
 
 /* ABOUT */
 .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: start; }
@@ -477,6 +482,8 @@ ul { list-style: none; }
   border-top: 3px solid var(--accent);
   border-radius: var(--radius);
   padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -769,4 +776,43 @@ button.contact-chip {
   body { background: #fff; color: #000; }
   .section, .section-compact { padding: 1.5rem 0; }
   .project-card, .cert-card, .skill-card { break-inside: avoid; box-shadow: none; }
+}
+
+.project-foot { margin-top: auto; }
+.project-desc { flex: 1; }
+.project-card { height: 100%; }
+
+/* HERO REFINEMENTS */
+.hero {
+  padding: 6rem 1.5rem 7rem;
+  min-height: min(78vh, 640px);
+  display: flex;
+  align-items: center;
+}
+
+.hero-graphic {
+  top: 50%;
+  right: -20px;
+  width: 400px;
+  height: 400px;
+  transform: translateY(-50%);
+  opacity: 0.55;
+}
+
+.scroll-cue { bottom: 2rem; left: 50%; margin-left: -12px; }
+
+@media (max-width: 768px) {
+  .hero { min-height: 0; padding: 4rem 1.5rem 4.5rem; }
+  .hero-graphic { width: 240px; height: 240px; right: -60px; top: 0; transform: none; opacity: 0.3; }
+}
+
+/* Contact band: full-width background, content aligned with other sections */
+.section-compact.alt-bg {
+  max-width: none;
+  margin: 0;
+  padding-top: 2.75rem;
+  padding-bottom: 2.75rem;
+  padding-left: max(1.5rem, calc((100% - var(--max-width)) / 2 + 1.5rem));
+  padding-right: max(1.5rem, calc((100% - var(--max-width)) / 2 + 1.5rem));
+  border-top: 1px solid var(--line);
 }
