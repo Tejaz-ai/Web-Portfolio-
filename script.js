@@ -1,145 +1,148 @@
-// Mobile menu toggle
-const menuToggle = document.getElementById('menuToggle');
-const navLinks = document.querySelector('.nav-links');
-const menuIcon = document.querySelector('.menu-icon');
-
-if (menuToggle && navLinks) {
-  menuToggle.addEventListener('click', () => {
-    const isOpen = navLinks.classList.toggle('open');
-    if (menuIcon) menuIcon.textContent = isOpen ? '✕' : '☰';
-  });
-
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      if (menuIcon) menuIcon.textContent = '☰';
-    });
-  });
-}
-
-// Auto-update footer year
-const yearEl = document.getElementById('year');
-if (yearEl) {
-  yearEl.textContent = new Date().getFullYear();
-}
-
-// Active nav link highlighting
-const sections = document.querySelectorAll('main section[id]');
-const navAnchors = document.querySelectorAll('.nav-links a');
-
-if (sections.length && navAnchors.length && 'IntersectionObserver' in window) {
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        navAnchors.forEach(a => {
-          const on = a.getAttribute('href') === `#${id}`;
-          a.classList.toggle('active', on);
-          if (on) { a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
-        });
-      }
-    });
-  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
-
-  sections.forEach(section => navObserver.observe(section));
-}
-
-// Back to top button
-const backToTop = document.getElementById('backToTop');
-if (backToTop) {
-  window.addEventListener('scroll', () => {
-    backToTop.classList.toggle('visible', window.scrollY > 480);
-  });
-
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-// Navbar shadow on scroll
-// Scroll progress bar
-const scrollProgress = document.getElementById('scrollProgress');
-if (scrollProgress) {
-  window.addEventListener('scroll', () => {
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
-    scrollProgress.style.width = progress + '%';
-  });
-}
-
-const navbar = document.querySelector('.navbar');
-if (navbar) {
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 8);
-  });
-}
-
-
-// Dark / light theme toggle (remembers choice, defaults to system preference)
+/* Tejas Choudhar — Portfolio interactions */
 (function () {
-  const root = document.documentElement;
-  const toggle = document.getElementById('themeToggle');
-  let saved = null;
-  try { saved = localStorage.getItem('theme'); } catch (e) {}
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  root.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+  'use strict';
 
-  if (toggle) {
-    toggle.addEventListener('click', () => {
-      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  var root = document.documentElement;
+  var $ = function (sel) { return document.querySelector(sel); };
+  var $$ = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Footer year ---------- */
+  var year = $('#year');
+  if (year) year.textContent = new Date().getFullYear();
+
+  /* ---------- Theme toggle ---------- */
+  var themeBtn = $('#themeToggle');
+  var themeMeta = $('meta[name="theme-color"]');
+
+  function syncThemeColor() {
+    if (!themeMeta) return;
+    themeMeta.setAttribute('content', root.getAttribute('data-theme') === 'dark' ? '#151912' : '#FAF7F0');
+  }
+  syncThemeColor();
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('theme', next); } catch (e) {}
+      syncThemeColor();
     });
   }
-})();
 
+  /* ---------- Mobile menu ---------- */
+  var menuBtn = $('#menuToggle');
+  var navLinks = $('#navLinks');
 
-// Count-up animation for stat badges (runs once when scrolled into view)
-(function () {
-  const nums = document.querySelectorAll('.stat-num[data-count]');
-  if (!nums.length || !('IntersectionObserver' in window)) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function setMenu(open) {
+    if (!menuBtn || !navLinks) return;
+    navLinks.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
 
-  const animate = (el) => {
-    const target = parseFloat(el.dataset.count);
-    const decimals = (el.dataset.count.split('.')[1] || '').length;
-    const duration = 1100;
-    const start = performance.now();
-    const tick = (now) => {
-      const t = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - t, 3);
-      el.textContent = (target * eased).toFixed(decimals);
-      if (t < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  };
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener('click', function () {
+      setMenu(!navLinks.classList.contains('open'));
+    });
+    navLinks.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setMenu(false);
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.navbar')) setMenu(false);
+    });
+  }
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        animate(entry.target);
-        io.unobserve(entry.target);
+  /* ---------- Scroll-driven UI (one throttled handler) ---------- */
+  var progress = $('#scrollProgress');
+  var navbar = $('#navbar');
+  var toTop = $('#backToTop');
+  var ticking = false;
+
+  function onScroll() {
+    var y = window.scrollY;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    if (progress) progress.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+    if (navbar) navbar.classList.toggle('scrolled', y > 8);
+    if (toTop) toTop.classList.toggle('visible', y > 480);
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  onScroll();
+
+  if (toTop) {
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+  }
+
+  /* ---------- Active nav link ---------- */
+  var sections = $$('main section[id]');
+  var anchors = $$('.nav-links a');
+
+  if (sections.length && anchors.length && 'IntersectionObserver' in window) {
+    var navObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var id = entry.target.id;
+        anchors.forEach(function (a) {
+          var on = a.getAttribute('href') === '#' + id;
+          a.classList.toggle('active', on);
+          if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        });
+      });
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+    sections.forEach(function (s) { navObserver.observe(s); });
+  }
+
+  /* ---------- Stat count-up (once, when visible) ---------- */
+  var nums = $$('.stat-num[data-count]');
+  if (nums.length && 'IntersectionObserver' in window && !reduceMotion) {
+    var countObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        countObserver.unobserve(entry.target);
+        runCount(entry.target);
+      });
+    }, { threshold: 0.6 });
+    nums.forEach(function (el) { countObserver.observe(el); });
+  }
+
+  function runCount(el) {
+    var raw = el.getAttribute('data-count');
+    var target = parseFloat(raw);
+    var decimals = (raw.split('.')[1] || '').length;
+    var start = performance.now();
+    var duration = 1100;
+    (function tick(now) {
+      var t = Math.min((now - start) / duration, 1);
+      el.textContent = (target * (1 - Math.pow(1 - t, 3))).toFixed(decimals);
+      if (t < 1) window.requestAnimationFrame(tick);
+    })(start);
+  }
+
+  /* ---------- Copy email ---------- */
+  var copyBtn = $('#copyEmail');
+  var copyLabel = $('#copyLabel');
+
+  if (copyBtn && copyLabel) {
+    copyBtn.addEventListener('click', function () {
+      var email = copyBtn.getAttribute('data-email');
+      var done = function (text) {
+        copyLabel.textContent = text;
+        setTimeout(function () { copyLabel.textContent = 'Copy email'; }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(function () { done('Copied!'); }, function () { done(email); });
+      } else {
+        done(email);
       }
     });
-  }, { threshold: 0.6 });
-
-  nums.forEach((el) => io.observe(el));
-})();
-
-
-// Copy email to clipboard
-(function () {
-  const btn = document.getElementById('copyEmail');
-  const label = document.getElementById('copyLabel');
-  if (!btn || !label) return;
-  btn.addEventListener('click', async () => {
-    const email = btn.dataset.email;
-    try {
-      await navigator.clipboard.writeText(email);
-      label.textContent = 'Copied!';
-    } catch (e) {
-      label.textContent = email;
-    }
-    setTimeout(() => { label.textContent = 'Copy email'; }, 2000);
-  });
+  }
 })();
