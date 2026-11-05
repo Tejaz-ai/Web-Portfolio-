@@ -5,6 +5,7 @@
 
 /* ---------- Tokens ---------- */
 :root {
+  color-scheme: light;
   --paper: #FAF7F0;
   --paper-alt: #F1EEE3;
   --ink: #211D17;
@@ -29,6 +30,7 @@
 }
 
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --paper: #151912;
   --paper-alt: #1B2018;
   --ink: #ECE8DC;
@@ -56,9 +58,13 @@ body {
   background-size: 22px 22px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
+p { text-wrap: pretty; }
+
 h1, h2, h3 {
+  text-wrap: balance;
   font-family: var(--font-display);
   font-weight: 600;
   line-height: 1.15;
@@ -66,6 +72,7 @@ h1, h2, h3 {
 }
 
 a { color: inherit; text-decoration: none; }
+a, button { -webkit-tap-highlight-color: transparent; }
 ul { list-style: none; }
 button { font: inherit; color: inherit; }
 svg { display: block; }
@@ -86,7 +93,7 @@ section[id] { scroll-margin-top: 72px; }
 }
 
 .section { padding: 5.5rem 0; }
-.section.alt { background: var(--paper-alt); }
+.section.alt { background: var(--paper-alt); transition: background-color 0.25s ease; }
 
 .section-title {
   position: relative;
@@ -111,7 +118,7 @@ section[id] { scroll-margin-top: 72px; }
   background: var(--card-bg);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.25s ease;
 }
 
 .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
@@ -150,6 +157,7 @@ section[id] { scroll-margin-top: 72px; }
 }
 
 .text-link:hover { border-bottom-color: currentColor; }
+.text-link, .btn-text { text-underline-offset: 3px; }
 .text-link-ink { color: var(--ink); }
 
 .rule { border: 0; border-top: 1px solid var(--line); margin: 1rem 0; }
@@ -584,6 +592,8 @@ section[id] { scroll-margin-top: 72px; }
   margin: 0 auto;
   padding: 2rem var(--gutter);
 }
+
+.notfound-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.4rem; }
 
 .notfound-code { font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); }
 .notfound h1 { font-size: clamp(2rem, 5vw, 2.8rem); }
