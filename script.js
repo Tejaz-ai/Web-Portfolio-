@@ -49,7 +49,13 @@
       if (e.target.closest('a')) setMenu(false);
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') setMenu(false);
+      if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+        setMenu(false);
+        menuBtn.focus();
+      }
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768) setMenu(false);
     });
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.navbar')) setMenu(false);
